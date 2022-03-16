@@ -1,0 +1,31 @@
+1) List of IP Addresses and their functions:
+   - 10.0.2.1 (MAC address 00:26:08:e5:66:07): ROUTER, all of the traffic coming from the address is DNS services to various other machines on the network, 
+	                                       thus implying this is providing the services of a DNS server to the other machines on the network, the job of
+					       a router
+   - 10.0.2.2 (MAC address 04:0c:ce:d8:0f:fa): HOME COMPUTER, as it sends out a lot of TCP, TLSv1 and HTTP traffic, a common behaviour of a home 
+	                                       computer pinging many websites. also pings one website many times over, insinuating the user visits many pages 
+					       within a foreign IP addresses
+   - 10.0.2.3 (MAC address 8c:a9:82:50:f0:a6): Another home device client, as it's first as there is a SSDP stream recorded as it's first packet
+               				       transmitted that is as follows: "ST:urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\n", which insinuates it
+               				       it connects to a node within the network that functions as an WiFi gateway.  
+   - Non 10.0.0.0/9 devices: seem to be either foreign ip addresses (external web servers), or, in the case of the other 192.168 address, just points to another
+                             10.0.2 device
+
+2) FTP Question:
+   a) IP address: 194.109.21.66, DNS hostname: XS4ALL
+   b) One vulnerability of FTP is that it's unencrypted, and anyone on the network can view the traffic being sent
+   c) SFTP (Secure FTP, which is encrypted) and FTPS (uses SSL)
+
+3) Alternate HTTPS connection:
+   a) The client is connecting to 74.125.142.95, also known as www.googleapis.com
+   b) Use an encrypted DNS server that doesn't allow for the traffic to be read via the network packets
+   c) There are 36 supported suites since this is a TLSv1.1 connection
+   d) The chosen suite is: TLS_ECDHE_RSA_WITH_RC4_128_SHA (0xc011)
+   e) The TLS Client verifies the authenticity
+
+4) Facebook:
+   a) The site stores it's cookies unencrypted in a home php file, which anyone monitoring the network traffic could see in the header of the HTTP traffic
+   b) An attacker could steal this cookie from the home.php file viewable via HTTP stream monitoring, copy it into their browser, and impersonates the user
+   c) This attack can be prevented by making the home.php only accessible under HTTPS, not HTTP, thus encrypting the traffic and disallowing attackers to
+      view it upon a simple network analysis
+   d) they sent a message (judging from the "POST /ajax/messaging/send.php HTTP/1.1" packet)
